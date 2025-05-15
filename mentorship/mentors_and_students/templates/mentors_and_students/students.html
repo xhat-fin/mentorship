@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<style>
+  body {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+  }
+  a {
+    text-decoration: none;
+  }
+</style>
+<body>
+<h1 align="center">Список студентов</h1>
+{% for item in data %}
+
+<ul>
+    <a href="{% url 'get_student_by_id' item.id%}"><li>Имя студента: {{ item.name }}</li></a>
+    <li>Необходимая помощь: {{ item.description }}</li>
+    <hr>
+</ul>
+
+{% endfor %}
+<a href="/">На главную</a>
+</ul>
+</body>
+</html>
