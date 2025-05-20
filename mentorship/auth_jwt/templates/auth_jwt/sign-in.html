@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+</head>
+<style>
+  body {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+  }
+  a {
+    text-decoration: none;
+  }
+  label {
+    padding-top:10px;
+    }
+</style>
+<body>
+<h1 align="center">Авторизация пользователя</h1>
+<form class="auth_form" method="post">
+    <div align="center">
+        <br>
+        <label>Логин</label>
+        <br>
+        <input type="text" name="login" placeholder="LOGIN" required>
+        <br><br>
+        <label>Пароль</label>
+        <br>
+        <input type="password" name="password" placeholder="PASSWORD" required>
+        <br>
+        <label>Роль</label>
+        <br>
+        <select>
+            <option value="mentor">Ментор</option>
+            <option value="student">Студент</option>
+        </select>
+        <br><br>
+        <button type="submit" class="sub_auth_butt">Войти</button>
+    </div>
+</form>
+</body>
+</html>

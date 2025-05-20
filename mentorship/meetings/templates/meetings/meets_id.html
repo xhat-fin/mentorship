@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meets</title>
+</head>
+<style>
+  body {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+  }
+  a {
+    text-decoration: none;
+  }
+</style>
+<body>
+
+<h1 align="center">Встречa {{ data.id }}</h1>
+
+<ul>
+    <li>ID встречи: {{ data.id }}</li>
+    <li>Название встречи: {{ data.title }}</li>
+    <li>ID студента: {{ data.id_student }}</li>
+    <li>ID ментора: {{ data.id_mentor }}</li>
+    <li>Дата создания встречи: {{ data.date_create }}</li>
+    <li>Назначенная дата встречи: {{ data.date_meet }}</li>
+</ul>
+<hr>
+<a href="http://127.0.0.1:8000/meet/view-meets/">К встречам</a>
+
+</body>
+</html>

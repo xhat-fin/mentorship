@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Students</title>
+    <title>Meets</title>
 </head>
 <style>
   body {
@@ -15,17 +15,16 @@
   }
 </style>
 <body>
-<h1 align="center">Список студентов</h1>
+<h1 align="center">Встречи</h1>
 {% for item in data %}
 
 <ul>
-    <a href="{% url 'get_student_by_id' item.id%}"><li>Имя студента: {{ item.name }}</li></a>
-    <li>Необходимая помощь: {{ item.descriptions }}</li>
-    <hr>
+    <li><a href="{% url 'get_meets_by_id' item.id%}">ID встречи: {{ item.id }}</a></li>
+    <li>Название встречи: {{ item.title }}</li>
 </ul>
-
+<hr>
 {% endfor %}
 <a href="/">На главную</a>
-</ul>
+
 </body>
 </html>
