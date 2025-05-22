@@ -9,7 +9,7 @@ from rest_framework.views import APIView, Response
 from .models import Meet
 from meetings.serializers import MeetSerializer
 import requests as req
-
+import os
 
 # Create your views here.
 
@@ -60,19 +60,42 @@ class MeetAPIviewID(APIView):
 
 
 
-headers = {
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ3NzYyMjM0LCJpYXQiOjE3NDc3NjE5MzQsImp0aSI6ImM1ZmEwZGVjNWE1NTRlNDVhODk4OGFlM2Q2M2ZhZDM3IiwidXNlcl9pZCI6MX0.vmjvhgFLyqU2QADUOQ038jqU892uHx4IEKBfNTw-Z9Q"
+def auth_token():
+    refresh_token = os.getenv('REFRESH')
+    tokens = req.post(url='http://127.0.0.1:8000/api/token/refresh/', data={"refresh": refresh_token})
+    if tokens.status_code == 200:
+        access_tokens = tokens.json()
+        print("получен новый токен access", access_tokens['access'])
+        return tokens.json()['access']
+    else:
+        return {"error": tokens.json()}
 
-}
 
 
 #view
 def get_meets(request):
-    data = req.get('http://127.0.0.1:8000/meet/api/v1/meetlist/', headers=headers)
-    return render(request, "meetings/meets.html", {"data": data.json()})
+    try:
+        data = req.get('http://127.0.0.1:8000/meet/api/v1/meetlist/', headers={"Authorization": f"Bearer {os.getenv('access')}"})
+        return render(request, "meetings/meets.html", {"data": data.json()})
+    except:
+        headers = {
+            "Authorization": f"Bearer {auth_token()}"
+        }
+        data = req.get('http://127.0.0.1:8000/meet/api/v1/meetlist/', headers=headers)
+        return render(request, "meetings/meets.html", {"data": data.json()})
 
 
 def get_meets_by_id(request, id):
-    data = req.get(f'http://127.0.0.1:8000/meet/api/v1/meetlist/{id}', headers=headers)
-    data = data.json()
-    return render(request, "meetings/meets_id.html", {"data":data})
+    try:
+        data = req.get(f'http://127.0.0.1:8000/meet/api/v1/meetlist/{id}', headers={"Authorization": f"Bearer {os.getenv('access')}"})
+        if data.status_code == 401:
+            raise Exception
+        data = data.json()
+        return render(request, "meetings/meets_id.html", {"data":data})
+    except:
+        headers = {
+            "Authorization": f"Bearer {auth_token()}"
+        }
+        data = req.get(f'http://127.0.0.1:8000/meet/api/v1/meetlist/{id}', headers=headers)
+        data = data.json()
+        return render(request, "meetings/meets_id.html", {"data":data})
